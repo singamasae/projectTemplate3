@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
 	xmlns:sec="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd 
 	http://www.springframework.org/schema/beans
@@ -33,6 +33,7 @@
 		<intercept-url pattern="/api/**" access="ROLE_USER" />
 		<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
+		<csrf disabled="true"/>
 	</http>
 
 	<beans:bean id="oauthAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
@@ -97,30 +98,28 @@
 	<beans:bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.DefaultUserApprovalHandler">
 	</beans:bean>
 
-	<oauth:authorization-server
-		client-details-service-ref="clientDetails" token-services-ref="tokenServices"
-		user-approval-handler-ref="userApprovalHandler">
-		<oauth:authorization-code />
-		<oauth:implicit />
-		<oauth:refresh-token />
-		<oauth:client-credentials />
-		<oauth:password />
-	</oauth:authorization-server>
+	<oauth2:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices" user-approval-handler-ref="userApprovalHandler">
+		<oauth2:authorization-code />
+		<oauth2:implicit />
+		<oauth2:refresh-token />
+		<oauth2:client-credentials />
+		<oauth2:password authentication-manager-ref="authenticationManager"/>	
+	</oauth2:authorization-server>
 
-	<oauth:resource-server id="resourceServerFilter"
+	<oauth2:resource-server id="resourceServerFilter"
 		resource-id="test" token-services-ref="tokenServices" />
 
-	<oauth:client-details-service id="clientDetails">
+	<oauth2:client-details-service id="clientDetails">
 		<!-- client -->
-		<oauth:client client-id="restapp"
+		<oauth2:client client-id="restapp"
 			authorized-grant-types="authorization_code,client_credentials"
 			authorities="ROLE_CLIENT" scope="read,write,trust" secret="secret" />
 
-		<oauth:client client-id="restapp"
+		<oauth2:client client-id="restapp"
 			authorized-grant-types="password,authorization_code,refresh_token,implicit"
 			secret="restapp" authorities="ROLE_CLIENT" />
 
-	</oauth:client-details-service>
+	</oauth2:client-details-service>
 
 	<sec:global-method-security
 		pre-post-annotations="enabled" proxy-target-class="true">
@@ -129,7 +128,7 @@
 		<sec:expression-handler ref="oauthExpressionHandler" />
 	</sec:global-method-security>
 
-	<oauth:expression-handler id="oauthExpressionHandler" />
-	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
+	<oauth2:expression-handler id="oauthExpressionHandler" />
+	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
 
 </beans:beans>
