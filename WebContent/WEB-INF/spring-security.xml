@@ -23,6 +23,7 @@
 		<custom-filter ref="clientCredentialsTokenEndpointFilter"
 			after="BASIC_AUTH_FILTER" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
+		<csrf disabled="true"/>
 	</http>
 
 	<!-- This is where we tells spring security what URL should be protected 
