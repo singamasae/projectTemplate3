@@ -72,7 +72,7 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<user-service>
-				<user name="beingjavaguys" password="spring@java" authorities="ROLE_USER" />
+				<user name="myuser" password="myuser@2016" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
@@ -103,7 +103,7 @@
 		<oauth2:implicit />
 		<oauth2:refresh-token />
 		<oauth2:client-credentials />
-		<oauth2:password authentication-manager-ref="authenticationManager"/>	
+		<oauth2:password />	
 	</oauth2:authorization-server>
 
 	<oauth2:resource-server id="resourceServerFilter"
