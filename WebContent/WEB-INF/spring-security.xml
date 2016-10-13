@@ -70,10 +70,8 @@
 		combination. We can replace this with a user defined service to get few users 
 		credentials from DB -->
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="admin@2016" authorities="ROLE_USER" />
-			</user-service>
+		<authentication-provider user-service-ref="myUserDetailsService">
+			<password-encoder ref="bCryptPasswordEncoder" />
 		</authentication-provider>
 	</authentication-manager>
 
@@ -130,5 +128,8 @@
 
 	<oauth2:expression-handler id="oauthExpressionHandler" />
 	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
+	
+	<beans:bean id="myUserDetailsService" class="com.project.template.services.security.MyUserDetailsService" />
+	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 </beans:beans>
