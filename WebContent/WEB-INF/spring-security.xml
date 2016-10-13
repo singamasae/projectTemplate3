@@ -72,7 +72,7 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<user-service>
-				<user name="myuser" password="myuser@2016" authorities="ROLE_USER" />
+				<user name="admin" password="admin@2016" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
