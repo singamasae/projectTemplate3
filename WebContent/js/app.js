@@ -47,7 +47,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/404');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
       .state('dashboard', {
@@ -60,10 +60,7 @@ angular
                 {
                     name:'app',
                     files:[
-                    'js/controllers/DashboardController.js',
-                    'js/services/authenticationServices.js',
-                    'js/services/permissionServices.js',
-					'js/directives/hasPermission.js',
+                    'js/controllers/DashboardController.js',   
 					'js/directives/delete/ngDeleteClick.js',
                     'js/directives/header/header.js',
                     'js/directives/header/header-notification/header-notification.js',
@@ -117,8 +114,7 @@ angular
 		            return $ocLazyLoad.load({
 		              name:'app',
 		              files:[		             
-		              'js/controllers/LoginController.js',
-		              'js/services/authenticationServices.js'
+		              'js/controllers/LoginController.js'		              
 		              ]
 		            })
 		          }
@@ -176,8 +172,6 @@ angular
        templateUrl:'404.html',
        url:'/404'
    })
-  }]).run(['$http','propertiesConstant', function($http, propertiesConstant) {
-	  $http.get(propertiesConstant.API_URL + '/isAuthenticated');	  
-	}]);
+  }]);
 
     
